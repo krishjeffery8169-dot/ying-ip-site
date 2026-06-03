@@ -57,52 +57,33 @@ copyButtons.forEach((button) => {
   });
 });
 
-document.querySelectorAll("[data-slider]").forEach((slider) => {
-  const track = slider.querySelector(".slider-track");
-  const cards = Array.from(slider.querySelectorAll(".post-card"));
-  const dots = slider.querySelector(".slider-dots");
-  const prev = slider.querySelector("[data-slider-prev]");
-  const next = slider.querySelector("[data-slider-next]");
+document.querySelectorAll(".slider-track").forEach((track) => {
+  let isDragging = false;
+  let startX = 0;
+  let startScrollLeft = 0;
 
-  if (!track || !cards.length || !dots || !prev || !next) return;
+  const stopDragging = () => {
+    isDragging = false;
+    track.classList.remove("is-dragging");
+  };
 
-  const dotButtons = cards.map((_, index) => {
-    const dot = document.createElement("button");
-    dot.className = "slider-dot";
-    dot.type = "button";
-    dot.setAttribute("aria-label", `第 ${index + 1} 张`);
-    dots.appendChild(dot);
-    dot.addEventListener("click", () => {
-      cards[index].scrollIntoView({ behavior: "smooth", block: "nearest", inline: "start" });
-    });
-    return dot;
+  track.addEventListener("pointerdown", (event) => {
+    if (event.button !== 0) return;
+    isDragging = true;
+    startX = event.clientX;
+    startScrollLeft = track.scrollLeft;
+    track.classList.add("is-dragging");
+    track.setPointerCapture?.(event.pointerId);
   });
 
-  const getActiveIndex = () => {
-    const trackLeft = track.getBoundingClientRect().left;
-    return cards.reduce((closest, card, index) => {
-      const distance = Math.abs(card.getBoundingClientRect().left - trackLeft);
-      return distance < closest.distance ? { index, distance } : closest;
-    }, { index: 0, distance: Infinity }).index;
-  };
+  track.addEventListener("pointermove", (event) => {
+    if (!isDragging) return;
+    event.preventDefault();
+    const distance = event.clientX - startX;
+    track.scrollLeft = startScrollLeft - distance;
+  });
 
-  const updateDots = () => {
-    const activeIndex = getActiveIndex();
-    dotButtons.forEach((dot, index) => {
-      dot.classList.toggle("is-active", index === activeIndex);
-    });
-  };
-
-  const scrollByCard = (direction) => {
-    const activeIndex = getActiveIndex();
-    const nextIndex = Math.max(0, Math.min(cards.length - 1, activeIndex + direction));
-    cards[nextIndex].scrollIntoView({ behavior: "smooth", block: "nearest", inline: "start" });
-    window.setTimeout(updateDots, 350);
-  };
-
-  prev.addEventListener("click", () => scrollByCard(-1));
-  next.addEventListener("click", () => scrollByCard(1));
-  track.addEventListener("scroll", () => window.requestAnimationFrame(updateDots), { passive: true });
-  window.addEventListener("resize", updateDots);
-  updateDots();
+  track.addEventListener("pointerup", stopDragging);
+  track.addEventListener("pointercancel", stopDragging);
+  track.addEventListener("pointerleave", stopDragging);
 });
