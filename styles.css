@@ -651,6 +651,24 @@ h3 {
   margin: 0 auto;
 }
 
+.gallery-counter {
+  position: absolute;
+  top: 22px;
+  right: 22px;
+  z-index: 2;
+  display: inline-flex;
+  gap: 5px;
+  align-items: center;
+  border: 1px solid rgba(126, 36, 68, 0.16);
+  background: rgba(255, 252, 251, 0.72);
+  color: var(--berry);
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0;
+  backdrop-filter: blur(10px);
+}
+
 .post-grid.slider-track {
   display: flex;
   grid-template-columns: none;
