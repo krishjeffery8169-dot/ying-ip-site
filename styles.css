@@ -692,6 +692,76 @@ h3 {
   gap: 12px;
 }
 
+.post-slider {
+  min-width: 0;
+}
+
+.slider-controls {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.slider-button {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(126, 36, 68, 0.2);
+  background: rgba(255, 252, 251, 0.78);
+  color: var(--berry);
+  font: inherit;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.slider-button:hover {
+  transform: translateY(-1px);
+  border-color: rgba(126, 36, 68, 0.38);
+  background: #fff;
+}
+
+.slider-dots {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.slider-dot {
+  width: 8px;
+  height: 8px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(126, 36, 68, 0.24);
+  padding: 0;
+  cursor: pointer;
+}
+
+.slider-dot.is-active {
+  width: 22px;
+  background: var(--berry);
+}
+
+.post-grid.slider-track {
+  display: flex;
+  grid-template-columns: none;
+  gap: 14px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-padding-inline: 2px;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.post-grid.slider-track::-webkit-scrollbar {
+  display: none;
+}
+
 .post-card {
   position: relative;
   min-height: 216px;
@@ -751,10 +821,12 @@ h3 {
 }
 
 .post-card.social-card-img {
+  flex: 0 0 calc((100% - 28px) / 3);
   aspect-ratio: 1;
   min-height: 0;
   padding: 0;
   background: #fff;
+  scroll-snap-align: start;
 }
 
 .post-card.social-card-img img {
@@ -862,6 +934,10 @@ h3 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .post-card.social-card-img {
+    flex-basis: calc((100% - 14px) / 2);
+  }
+
   .download-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -902,6 +978,14 @@ h3 {
   .download-grid,
   .outfit-grid {
     grid-template-columns: 1fr;
+  }
+
+  .slider-controls {
+    justify-content: space-between;
+  }
+
+  .post-card.social-card-img {
+    flex-basis: 86%;
   }
 
   .post-card {
