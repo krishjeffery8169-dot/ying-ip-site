@@ -62,9 +62,26 @@ document.querySelectorAll(".slider-track").forEach((track) => {
   let startX = 0;
   let startScrollLeft = 0;
 
+  const snapToNearestCard = () => {
+    const cards = Array.from(track.querySelectorAll(".social-card-img"));
+    if (!cards.length) return;
+
+    const nearest = cards.reduce(
+      (closest, card) => {
+        const distance = Math.abs(card.offsetLeft - track.scrollLeft);
+        return distance < closest.distance ? { card, distance } : closest;
+      },
+      { card: cards[0], distance: Infinity }
+    );
+
+    track.scrollTo({ left: nearest.card.offsetLeft, behavior: "smooth" });
+  };
+
   const stopDragging = () => {
+    if (!isDragging) return;
     isDragging = false;
     track.classList.remove("is-dragging");
+    snapToNearestCard();
   };
 
   track.addEventListener("pointerdown", (event) => {

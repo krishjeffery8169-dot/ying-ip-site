@@ -647,18 +647,18 @@ h3 {
 
 .post-slider {
   position: relative;
-  width: min(1480px, 100%);
+  width: min(1020px, 100%);
   margin: 0 auto;
 }
 
 .post-grid.slider-track {
   display: flex;
   grid-template-columns: none;
-  gap: clamp(18px, 2.2vw, 32px);
+  gap: 24px;
   overflow-x: auto;
   overscroll-behavior-x: contain;
-  padding: 6px clamp(2px, 0.7vw, 10px) 30px;
-  scroll-padding-inline: clamp(2px, 0.7vw, 10px);
+  padding: 6px 0 30px;
+  scroll-padding-inline: 0;
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
@@ -741,12 +741,13 @@ h3 {
 }
 
 .post-card.social-card-img {
-  flex: 0 0 clamp(560px, 58vw, 820px);
+  flex: 0 0 100%;
   aspect-ratio: 1;
   min-height: 0;
   padding: 0;
   background: #fff;
   scroll-snap-align: start;
+  scroll-snap-stop: always;
   transition: transform 0.24s ease, border-color 0.24s ease;
 }
 
@@ -859,7 +860,7 @@ h3 {
   }
 
   .post-card.social-card-img {
-    flex-basis: min(78vw, 640px);
+    flex-basis: 100%;
   }
 
   .download-grid {
@@ -905,7 +906,7 @@ h3 {
   }
 
   .post-card.social-card-img {
-    flex-basis: 86%;
+    flex-basis: 100%;
   }
 
   .post-card {
