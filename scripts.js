@@ -57,21 +57,62 @@ copyButtons.forEach((button) => {
   });
 });
 
+const revealTargets = document.querySelectorAll([
+  ".hero-content",
+  ".hero-stats div",
+  ".section-heading",
+  ".copy-block",
+  ".principle-grid article",
+  ".world-grid article",
+  ".grand-grid article",
+  ".showcase-image",
+  ".form-list article",
+  ".outfit-grid article",
+  ".visual-layout figure",
+  ".palette-panel",
+  ".web-image-grid article",
+  ".post-slider",
+  ".download-grid a",
+].join(","));
+
+if (revealTargets.length) {
+  revealTargets.forEach((item, index) => {
+    item.classList.add("reveal-item");
+    item.style.setProperty("--reveal-delay", `${(index % 4) * 70}ms`);
+  });
+
+  document.body.classList.add("reveal-ready");
+
+  if ("IntersectionObserver" in window) {
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("is-visible");
+        revealObserver.unobserve(entry.target);
+      });
+    }, { threshold: 0.16, rootMargin: "0px 0px -8% 0px" });
+
+    revealTargets.forEach((item) => revealObserver.observe(item));
+  } else {
+    revealTargets.forEach((item) => item.classList.add("is-visible"));
+  }
+}
+
 document.querySelectorAll(".post-slider").forEach((slider) => {
   const track = slider.querySelector(".slider-track");
   const cards = Array.from(slider.querySelectorAll(".social-card-img"));
   const currentLabel = slider.querySelector("[data-gallery-current]");
+  const counter = slider.querySelector(".gallery-counter");
 
   if (!track || cards.length < 2) return;
 
   let isDragging = false;
+  let activeIndex = -1;
   let startX = 0;
   let startScrollLeft = 0;
   let autoTimer = 0;
   let resumeTimer = 0;
   let scrollFrame = 0;
-
-  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
   const getCardLeft = (card) => {
     const cardRect = card.getBoundingClientRect();
@@ -90,8 +131,19 @@ document.querySelectorAll(".post-slider").forEach((slider) => {
   };
 
   const updateCounter = () => {
-    if (!currentLabel) return;
-    currentLabel.textContent = String(getActiveIndex() + 1).padStart(2, "0");
+    const nextIndex = getActiveIndex();
+    cards.forEach((card, index) => {
+      card.classList.toggle("is-active", index === nextIndex);
+    });
+
+    if (currentLabel && activeIndex !== nextIndex) {
+      currentLabel.textContent = String(nextIndex + 1).padStart(2, "0");
+      counter?.classList.remove("is-changing");
+      void counter?.offsetWidth;
+      counter?.classList.add("is-changing");
+    }
+
+    activeIndex = nextIndex;
   };
 
   const scrollToIndex = (index, behavior = "smooth") => {
@@ -107,7 +159,6 @@ document.querySelectorAll(".post-slider").forEach((slider) => {
 
   const startAuto = () => {
     pauseAuto();
-    if (prefersReducedMotion.matches) return;
 
     autoTimer = window.setInterval(() => {
       if (document.hidden || isDragging) return;
