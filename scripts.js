@@ -112,12 +112,12 @@ document.querySelectorAll(".post-slider").forEach((slider) => {
     autoTimer = window.setInterval(() => {
       if (document.hidden || isDragging) return;
       scrollToIndex((getActiveIndex() + 1) % cards.length);
-    }, 4200);
+    }, 2000);
   };
 
   const resumeAutoSoon = () => {
     window.clearTimeout(resumeTimer);
-    resumeTimer = window.setTimeout(startAuto, 2600);
+    resumeTimer = window.setTimeout(startAuto, 1200);
   };
 
   const snapToNearestCard = () => {

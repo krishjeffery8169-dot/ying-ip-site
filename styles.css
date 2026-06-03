@@ -647,7 +647,7 @@ h3 {
 
 .post-slider {
   position: relative;
-  width: min(1020px, 100%);
+  width: min(760px, 100%);
   margin: 0 auto;
 }
 
