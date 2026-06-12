@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="一个可旋转、可缩放、可探索的银河系 3D 交互网站。"
+    />
+    <title>银河系互动星图</title>
+    <script type="module" crossorigin src="./assets/index-CUobMpJo.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-TRyTsxm2.css">
+  </head>
+  <body>
+    <canvas id="galaxy-canvas" aria-label="银河系 3D 互动星图"></canvas>
+
+    <div class="hud" aria-live="polite">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="银河系互动星图首页">
+          <span class="brand-mark"></span>
+          <span>
+            <span class="eyebrow">Interactive Galaxy</span>
+            <strong>银河系互动星图</strong>
+          </span>
+        </a>
+
+        <nav class="view-controls" aria-label="切换银河视角">
+          <button class="is-active" type="button" data-view="spiral">旋臂</button>
+          <button type="button" data-view="edge">侧视</button>
+          <button type="button" data-view="core">银心</button>
+          <button type="button" data-view="local">太阳邻域</button>
+        </nav>
+      </header>
+
+      <main class="content-shell">
+        <section class="info-panel panel" id="info-panel">
+          <p class="eyebrow" id="selected-kicker">当前目标</p>
+          <h1 id="selected-title">Milky Way</h1>
+          <p id="selected-copy">
+            一座由数千亿颗恒星、气体云和暗物质共同组成的旋涡星系。点击发光标记，可以在银河核心、旋臂和太阳邻域之间切换焦点。
+          </p>
+          <dl class="stats-grid" id="stats-grid">
+            <div>
+              <dt>直径</dt>
+              <dd>约 10 万光年</dd>
+            </div>
+            <div>
+              <dt>恒星数量</dt>
+              <dd>约 1000-4000 亿</dd>
+            </div>
+          </dl>
+        </section>
+      </main>
+
+      <aside class="control-panel panel" aria-label="星图控制台">
+        <div class="control-row">
+          <span>
+            <span class="control-title">自动巡航</span>
+            <span class="control-note" id="orbit-state">开启</span>
+          </span>
+          <label class="switch">
+            <input id="auto-rotate" type="checkbox" checked />
+            <span></span>
+          </label>
+        </div>
+
+        <label class="slider-row" for="speed-control">
+          <span>巡航速度</span>
+          <input id="speed-control" type="range" min="0" max="100" value="38" />
+        </label>
+
+        <label class="slider-row" for="glow-control">
+          <span>星光强度</span>
+          <input id="glow-control" type="range" min="0" max="100" value="64" />
+        </label>
+
+        <button class="reset-button" type="button" id="reset-view">重置视角</button>
+      </aside>
+    </div>
+
+    <div class="marker-layer" id="marker-layer" aria-hidden="false"></div>
+    <div class="loading" id="loading">正在点亮星图...</div>
+
+  </body>
+</html>
