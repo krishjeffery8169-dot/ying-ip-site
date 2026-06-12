@@ -8,8 +8,8 @@
       content="一个可旋转、可缩放、可探索的银河系 3D 交互网站。"
     />
     <title>银河系互动星图</title>
-    <script type="module" crossorigin src="./assets/index-CUobMpJo.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-TRyTsxm2.css">
+    <script type="module" crossorigin src="./assets/index-CDCTfq4q.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-ds8eOY4M.css">
   </head>
   <body>
     <canvas id="galaxy-canvas" aria-label="银河系 3D 互动星图"></canvas>
@@ -64,6 +64,15 @@
           </label>
         </div>
 
+        <div class="mode-row" aria-label="视觉互动模式">
+          <span class="control-title">视觉互动</span>
+          <div class="mode-buttons">
+            <button class="is-active" type="button" data-effect="gravity">引力波</button>
+            <button type="button" data-effect="stardust">星尘</button>
+            <button type="button" data-effect="focus">聚焦</button>
+          </div>
+        </div>
+
         <label class="slider-row" for="speed-control">
           <span>巡航速度</span>
           <input id="speed-control" type="range" min="0" max="100" value="38" />
@@ -79,6 +88,7 @@
     </div>
 
     <div class="marker-layer" id="marker-layer" aria-hidden="false"></div>
+    <div class="cursor-orb" id="cursor-orb" aria-hidden="true"></div>
     <div class="loading" id="loading">正在点亮星图...</div>
 
   </body>
